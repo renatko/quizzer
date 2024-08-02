@@ -1,0 +1,21 @@
+{# templates/test/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Test{% endblock %}
+
+{% block body %}
+    <h1>Test</h1>
+    {{ form_start(form) }}
+    {% for child in form %}
+        <div>
+            <h3>{{ form_label(child) }}</h3>
+            {{ form_errors(child) }}
+            <div>
+                {{ form_widget(child) }}
+            </div>
+        </div>
+    {% endfor %}
+    <button type="submit">Submit</button>
+    {{ form_end(form) }}
+
+{% endblock %}

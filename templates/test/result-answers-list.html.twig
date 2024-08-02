@@ -1,0 +1,14 @@
+<h3>{{ question.question }}</h3>
+<ol id="question_{{ question.getId() }}">
+    {% for answer in question.answers %}
+        <li>
+            <input type="checkbox" disabled {% if userAnswerIds.contains(answer.id) %} checked {% endif %}>
+            {{ answer.answer }}
+            {% if answer.isValid %}
+                valid
+            {% elseif answer.isValid is same as false %}
+                invalid
+            {% endif %}
+        </li>
+    {% endfor %}
+</ol>
