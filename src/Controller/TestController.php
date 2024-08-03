@@ -13,10 +13,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\Request;
-
 
 class TestController extends AbstractController
 {
@@ -29,7 +28,6 @@ class TestController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
 
     #[Route('/test/submit', name: 'test_submit', methods: ['POST'])]
     public function submit(Request $request, TestQuestionRepository $questionRepository, EntityManagerInterface $em): Response
@@ -60,7 +58,6 @@ class TestController extends AbstractController
         }
 
         throw new BadRequestException();
-
     }
 
     #[Route('/test/result/{id}', name: 'test_result', methods: ['GET'])]
@@ -68,7 +65,7 @@ class TestController extends AbstractController
     {
         $userAnswerIds = $result->getAnswers()
             ->map(
-                fn(TestResultAnswer $answer) => $answer->getQuestionAnswer()->getId()
+                fn (TestResultAnswer $answer) => $answer->getQuestionAnswer()->getId()
             );
         $questions = $questionRepository->findAll();
         $validQuestions = [];
@@ -76,18 +73,18 @@ class TestController extends AbstractController
         foreach ($questions as $question) {
             $question = $this->validateQuestionAnswers($question, $userAnswerIds);
             $validAnswers = $question->getAnswers()->filter(
-                fn(TestQuestionAnswer $answer) => $answer->getIsValid() === true
+                fn (TestQuestionAnswer $answer) => true === $answer->getIsValid()
             );
             $invalidAnswers = $question->getAnswers()->filter(
-                fn(TestQuestionAnswer $answer) => $answer->getIsValid() === false
+                fn (TestQuestionAnswer $answer) => false === $answer->getIsValid()
             );
-            if ($invalidAnswers->count() > 0 || $validAnswers->count() == 0) {
+            if ($invalidAnswers->count() > 0 || 0 == $validAnswers->count()) {
                 $invalidQuestions[] = $question;
             } else {
                 $validQuestions[] = $question;
             }
-
         }
+
         return $this->render('test/result.html.twig', [
             'result' => $result,
             'userAnswerIds' => $userAnswerIds,
@@ -103,6 +100,7 @@ class TestController extends AbstractController
                 $answer->setIsValid($answer->isCorrect());
             }
         }
+
         return $question;
     }
 
@@ -120,7 +118,7 @@ class TestController extends AbstractController
             }
             $questions[$question->getId()] = [
                 'question' => $question->getQuestion(),
-                'answers' => $answers
+                'answers' => $answers,
             ];
         }
 

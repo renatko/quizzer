@@ -3,14 +3,13 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class QuestionnaireType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $questions = $options['questions'];
@@ -20,8 +19,8 @@ class QuestionnaireType extends AbstractType
                 'inherit_data' => false,
                 'choices' => array_flip($question['answers']),
                 'label' => $question['question'],
-                'choice_attr' => fn($answerId) => [
-                    'class' => "question-answer answer-{$answerId}"
+                'choice_attr' => fn ($answerId) => [
+                    'class' => "question-answer answer-{$answerId}",
                 ],
                 'expanded' => true,
                 'multiple' => true,

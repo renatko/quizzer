@@ -66,7 +66,10 @@ class TestControllerTest extends WebTestCase
         $this->client->submit($form);
 
         $this->assertResponseRedirects();
-        $this->assertMatchesRegularExpression('!/test/result/([0-9]+)!', $this->client->getResponse()->headers->get('Location'));
+        $this->assertMatchesRegularExpression(
+            '!/test/result/([0-9]+)!',
+            $this->client->getResponse()->headers->get('Location')
+        );
 
         $crawler = $this->client->followRedirect();
         foreach ($allCorrectQuestions as $questionId) {
@@ -82,7 +85,6 @@ class TestControllerTest extends WebTestCase
         );
     }
 
-
     public function testIncompleteSubmit()
     {
         $crawler = $this->client->request('GET', '/');
@@ -94,5 +96,4 @@ class TestControllerTest extends WebTestCase
             $this->client->getResponse()->getStatusCode()
         );
     }
-
 }

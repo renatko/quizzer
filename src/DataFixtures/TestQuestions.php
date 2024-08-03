@@ -67,7 +67,7 @@ class TestQuestions extends Fixture
             '2' => false,
             '8' => false,
             '20' => true,
-        ]
+        ],
     ];
 
     public function load(ObjectManager $manager): void

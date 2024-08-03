@@ -10,11 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
 class TestQuestion
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "SEQUENCE")]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: "text")]
+    #[ORM\Column(type: 'text')]
     private ?string $question = null;
 
     #[ORM\OneToMany(
