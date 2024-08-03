@@ -28,8 +28,6 @@ services:
       dockerfile: docker/php-fpm/Dockerfile
     container_name: app
     working_dir: /var/www/html
-    volumes:
-      - .:/var/www/html
     depends_on:
       - database
   nginx:
