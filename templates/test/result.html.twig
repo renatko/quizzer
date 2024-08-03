@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Test Results{% endblock %}
+
+{% block body %}
+    <h1>Test Results #{{ result.getId() }}</h1>
+    <table style="width: 100%">
+        <tr>
+            <td style="vertical-align: top; width: 50%" id="valid">
+                <h2>Valid:</h2>
+                {% for question in validQuestions %}
+                    {% include "test/result-answers-list.html.twig" %}
+                {% endfor %}
+            </td>
+            <td style="vertical-align: top; width: 50%" id="invalid">
+                <h2>Invalid:</h2>
+                {% for question in invalidQuestions %}
+                    {% include "test/result-answers-list.html.twig" %}
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+
+
+    <a href="{{ path('test_index') }}">Try Again</a>
+{% endblock %}
